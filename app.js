@@ -4,8 +4,26 @@ const { execArgv } = require('process');
 const ejs = require('ejs');
 const app = express();
 
+const photoControllers = require('./controllers/photoControllers');
+const pageController = require('./controllers/pageController');
+
 const fileUpload = require('express-fileupload');
 const methodOverride = require('method-override');
+
+mongoose
+  .connect(
+    'mongodb+srv://buketsoyhan:<2nPfy4vsbAl8CaXb>@buketsoyhan.05fmo.mongodb.net/?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log('DB CONNECTED!');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // TEMPLATE ENGINE
 app.set('view engine', 'ejs');
@@ -25,13 +43,16 @@ app.use(
 );
 // ROUTES
 app.get('/', photoControllers.getAllPhotos);
-app.post('/photos', (req, res) => {
-  console.log(req.body);
-  res.redirect('/');
-});
+app.delete('/photos/:id', photoControllers.deletePhoto);
+app.get('/photos/:id', photoControllers.getPhotos);
+app.post('/photos', photoControllers.createPhoto);
+app.put('/photos/:id', photoControllers.updatePhoto);
+app.get('/photos/edit/:id', pageController.getIndexPage);
+app.get('/about', pageController.getAboutPage);
+app.get('/add', pageController.getEditPage);
 
 // PORT
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {
   console.log(`Server started on ${port} port`);
 });
