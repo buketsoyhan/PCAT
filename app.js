@@ -12,7 +12,7 @@ const methodOverride = require('method-override');
 
 mongoose
   .connect(
-    'mongodb+srv://buketsoyhan:<2nPfy4vsbAl8CaXb>@buketsoyhan.05fmo.mongodb.net/?retryWrites=true&w=majority',
+    'mongodb+srv://buketsoyhan:Zr0cum37DwQcLCSk@buketsoyhan.05fmo.mongodb.net/?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
